@@ -1,3 +1,13 @@
+# Env variables
+.env
+
+# Editors
+.idea/
+.vscode/
+
+# Build
+/build/
+
 # Logs
 logs
 *.log

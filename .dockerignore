@@ -1,0 +1,19 @@
+# Env variables
+.env
+
+# Editors
+.idea/
+.vscode/
+
+# Build
+/build/
+
+# Dependencies
+/node_modules/
+npm-debug.log*
+
+# Optional cache
+.DS_Store
+
+# Testing
+/coverage
