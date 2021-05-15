@@ -1,4 +1,4 @@
-name: Test detest build and code
+name: Test
 
 on:
   pull_request:
@@ -25,6 +25,3 @@ jobs:
 
       - name: Run formatting check
         run: npm run prettier-check
-
-      - name: Try build
-        run: npm run build
