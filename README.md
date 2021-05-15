@@ -4,6 +4,9 @@
 <h1 align="center">
   de-test
 </h1>
+<h2 align="center">
+  Complex design testing in a very simple way
+</h2>
 
 > This tool allows you to test you web application design in a very simple way. Complete your end-to-end testing by writing multiple test cases in TO DO: file. No programming knowledge required!
 
