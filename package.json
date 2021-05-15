@@ -1,0 +1,31 @@
+{
+  "name": "detest",
+  "version": "1.0.0",
+  "description": "Tool for testing the design of your app.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon --legacy-watch -e js,graphql src/server.js",
+    "lint-check": "eslint \"src/**/*.js\" \"index.js\" \"cli.js\"",
+    "prettier-check": "prettier --check \"src/**/*.js\" \"index.js\" \"cli.js\"",
+    "prettier-fix": "prettier --write \"src/**/*.js\" \"index.js\" \"cli.js\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MikeyZat/detest.git"
+  },
+  "keywords": [
+    "test",
+    "design",
+    "testing"
+  ],
+  "author": "MikeyZat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MikeyZat/detest/issues"
+  },
+  "homepage": "https://github.com/MikeyZat/detest#readme",
+  "dependencies": {
+    "puppeteer": "^9.1.1"
+  }
+}
