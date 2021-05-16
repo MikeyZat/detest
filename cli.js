@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+// Created by Mikołaj Zatorski c. 2021
 
 const yargs = require('yargs');
 const main = require('./index');
@@ -8,7 +9,7 @@ const builder = (command) =>
     .option('configFile', {
       describe: 'Path to the detest config file',
       type: 'string',
-      default: 'detest.conf',
+      default: 'detest.yaml',
       alias: 'c',
     })
     .options({});
