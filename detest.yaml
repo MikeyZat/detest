@@ -1,0 +1,31 @@
+global:
+  name: Design testing of local app
+  url: localhost:3000
+  debug: False
+  threshold: 80
+
+tests:
+  - name: First set of tests
+    type: styles
+    debug: True
+    test_cases:
+      - xpath: '#klasa'
+        border: '1px solid #ffffff'
+        width: 40
+        height: 40
+        color: red
+      - xpath: '#jakies_id'
+        background-color: $000000
+
+  - name: Second set of tests
+    type: styles
+    url: https://www.youtube.com/
+    run: False
+    test_cases:
+      - xpath: '#klasa'
+        border: '1px solid #ffffff'
+        width: 40
+        height: 40
+        color: red
+      - xpath: '#jakies_id'
+        background-color: $000000
