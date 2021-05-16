@@ -8,7 +8,7 @@
   Complex design testing in a very simple way
 </h2>
 
-> This tool allows you to test you web application design in a very simple way. Complete your end-to-end testing by writing multiple test cases in TO DO: file. No programming knowledge required!
+> This tool allows you to test you web application design in a very simple way. Complete your end-to-end testing by writing multiple test cases in detest.yaml file. No programming knowledge required!
 
 [![Generic badge](https://img.shields.io/badge/Build%20with-Node-darkgreen.svg)](https://shields.io/)
 ![Build](https://github.com/MikeyZat/in-design-reviewer/actions/workflows/test.yaml/badge.svg)
