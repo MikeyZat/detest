@@ -2,7 +2,13 @@
 
 const mergeOptions = (configFromFile, configFromCli) => ({
   ...configFromFile,
-  ...configFromCli,
+  name: configFromCli.name || configFromFile.name,
+  url: configFromCli.url || configFromFile.url,
+  debug:
+    configFromCli.debug !== undefined
+      ? configFromCli.debug
+      : configFromFile.debug,
+  timeout: configFromCli.timeout || configFromFile.timeout,
 });
 
 module.exports = mergeOptions;

@@ -12,9 +12,36 @@ const builder = (command) =>
       default: 'detest.yaml',
       alias: 'c',
     })
-    .options({});
+    .options({
+      debug: {
+        describe: 'Run in a debug mode',
+        type: 'boolean',
+        alias: 'd',
+      },
+      url: {
+        describe: 'Entrypoint of the web application',
+        type: 'string',
+        alias: 'u',
+      },
+      name: {
+        describe: 'Name of the tests (visible in output)',
+        type: 'string',
+        alias: 'n',
+      },
+      timeout: {
+        describe: 'Timeout for puppeteer setDefaultTimeout',
+        type: 'number',
+        alias: 't',
+      },
+    });
 
-const handler = ({ configFile, ...rest }) => main(configFile, rest);
+const extractOptions = (options) => {
+  const { url, debug, name, timeout } = options;
+  return { url, debug, name, timeout };
+};
+
+const handler = ({ configFile, ...rest }) =>
+  main(configFile, extractOptions(rest));
 
 yargs
   .command('*', 'Elo', builder, handler)
