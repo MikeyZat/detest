@@ -1,13 +1,12 @@
 global:
   name: Design testing of local app
   url: localhost:3000
-  debug: False
-  threshold: 80
+  debug: True
 
 tests:
   - name: First set of tests
     type: styles
-    debug: True
+    url: https://example.com/
     test_cases:
       - xpath: '#klasa'
         border: '1px solid #ffffff'
@@ -20,7 +19,8 @@ tests:
   - name: Second set of tests
     type: styles
     url: https://www.youtube.com/
-    run: False
+    width: 1600
+    timeout: 20000
     test_cases:
       - xpath: '#klasa'
         border: '1px solid #ffffff'

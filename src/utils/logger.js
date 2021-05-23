@@ -2,6 +2,8 @@
 
 const pino = require('pino');
 
+const DEBUG_LEVEL = 'debug';
+
 const logger = pino({
   prettyPrint: {
     levelFirst: true,
@@ -10,4 +12,16 @@ const logger = pino({
   },
 });
 
-module.exports = logger;
+const setLoggerInDebug = () => {
+  logger.level = DEBUG_LEVEL;
+};
+
+const revertLoggerLevel = (oldLogLevel) => {
+  logger.level = oldLogLevel;
+};
+
+module.exports = {
+  logger,
+  setLoggerInDebug,
+  revertLoggerLevel,
+};
