@@ -8,12 +8,12 @@ tests:
     type: styles
     url: https://example.com/
     test_cases:
-      - xpath: '#klasa'
+      - selector: '#klasa'
         border: '1px solid #ffffff'
         width: 40
         height: 40
         color: red
-      - xpath: '#jakies_id'
+      - selector: '#jakies_id'
         background-color: $000000
 
   - name: Second set of tests
@@ -22,10 +22,10 @@ tests:
     width: 1600
     timeout: 20000
     test_cases:
-      - xpath: '#klasa'
+      - selector: '#klasa'
         border: '1px solid #ffffff'
         width: 40
         height: 40
-        color: red
-      - xpath: '#jakies_id'
+        color: '#ff0000'
+      - selector: '#jakies_id'
         background-color: $000000
