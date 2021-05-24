@@ -43,6 +43,17 @@ const service = async (localConfig, globalConfig) => {
 const setUpFinalConfig = (localConfig, globalConfig) => ({
   ...globalConfig,
   ...localConfig,
+  url: shapeLocalUrl(globalConfig.url, localConfig.url),
 });
+
+const shapeLocalUrl = (globalUrl, localUrl) => {
+  if (localUrl) {
+    if (globalUrl && localUrl.startsWith('/')) {
+      return `${globalUrl}${localUrl}`;
+    }
+    return localUrl;
+  }
+  return globalUrl;
+};
 
 module.exports = service;
