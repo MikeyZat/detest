@@ -23,6 +23,14 @@
 
 ## Motivation
 
+### Why?
+The market lacks tools for testing the **design** of web applications.
+The design testing is usually done manually and requires a lot of developers, designers and testers attention and effort.
+
+### The main goal
+The aim of this project is to allow web developers and web designers to cover their application with end-to-end design tests.
+I'd like to enhance design testing of web applications by creating a library which supports multiple types of such tests and can be easily used by developers or even designers with no programming knowledge.
+
 ## Authors
 
 <table>
