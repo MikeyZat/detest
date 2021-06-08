@@ -1,5 +1,6 @@
 // Created by Mikołaj Zatorski c. 2021
 
+const tap = require('tap');
 const BrowserSingleton = require('../../utils/browser');
 const { logger } = require('../../utils/logger');
 const compareStyles = require('./compareStyles');
@@ -33,26 +34,39 @@ const runTestCases = async (page, testCases) => {
 const runTestCase = async (page, testCase) => {
   const { selector, xpath, ...expectedStyles } = testCase;
 
-  try {
-    if (selector) {
-      const actualStyles = await getStylesWithSelector(
-        page,
-        selector,
-        expectedStyles
-      );
-      return compareStyles(expectedStyles, actualStyles);
+  await tap.test(
+    'Check if elements exists and have correct styles',
+    async (t) => {
+      let actualStyles;
+      try {
+        actualStyles = await getStylesToCompare(
+          page,
+          selector || xpath,
+          expectedStyles,
+          !!selector
+        );
+      } catch (err) {
+        logger.trace(err);
+        actualStyles = false;
+      }
+      t.ok(actualStyles, `check if element ${selector || xpath} exists`);
+      if (actualStyles) {
+        t.same(actualStyles, expectedStyles);
+      }
+      t.end();
     }
-
-    const actualStyles = await getStylesWithxPath(page, xpath, expectedStyles);
-    return compareStyles(expectedStyles, actualStyles);
-  } catch (err) {
-    // fail the test
-    logger.trace(err);
-    logger.error(
-      `Element with selector/xpath ${selector || xpath} doesnt exist`
-    );
-  }
+  );
 };
+
+const getStylesToCompare = async (
+  page,
+  elementSelector,
+  expectedStyles,
+  isSelector
+) =>
+  isSelector
+    ? await getStylesWithSelector(page, elementSelector, expectedStyles)
+    : await getStylesWithxPath(page, elementSelector, expectedStyles);
 
 const getStylesWithSelector = async (page, selector, expectedStyles) =>
   await page.$eval(selector, getElementStyles, expectedStyles);
