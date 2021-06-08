@@ -30,6 +30,7 @@
     "pino": "^6.11.3",
     "pino-pretty": "^4.8.0",
     "puppeteer": "^9.1.1",
+    "tap": "^15.0.9",
     "yargs": "^17.0.1"
   },
   "devDependencies": {
