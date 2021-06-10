@@ -3,7 +3,7 @@
 const tap = require('tap');
 const BrowserSingleton = require('../../utils/browser');
 const { logger } = require('../../utils/logger');
-const compareStyles = require('./compareStyles');
+const normalizeStyles = require('./normalizeStyles');
 
 const runPuppeteerTests = async (config, testCases) => {
   const { url, width, height, timeout, name } = config;
@@ -51,7 +51,11 @@ const runTestCase = async (page, testCase) => {
       }
       t.ok(actualStyles, `check if element ${selector || xpath} exists`);
       if (actualStyles) {
-        t.same(actualStyles, expectedStyles);
+        t.same(
+          normalizeStyles(actualStyles),
+          normalizeStyles(expectedStyles),
+          `compare if element ${selector || xpath} styles match`
+        );
       }
       t.end();
     }

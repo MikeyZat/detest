@@ -6,6 +6,7 @@ const { logger, setLoggerInDebug } = require('./src/utils/logger');
 const BrowserSingleton = require('./src/utils/browser');
 const mergeOptions = require('./src/utils/mergeOptions');
 const { STYLES, LAYOUT } = require('./src/utils/const');
+const logTestSummary = require('./src/utils/testSummary');
 const { TESTS_EXAMPLE } = require('./src/utils/helpExamples');
 const stylesService = require('./src/services/stylesService');
 
@@ -31,6 +32,8 @@ const main = async (fileName, options) => {
       for (test of tests) {
         await handleTest(test, mergedGlobalConfig);
       }
+
+      logTestSummary();
 
       await BrowserSingleton.closeBrowser();
     } else {
