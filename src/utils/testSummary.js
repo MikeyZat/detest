@@ -19,7 +19,9 @@ const testSummary = () => {
   console.log('TOTAL TEST CASES FAILED:');
   console.log(tap.counts.fail);
   console.log('SUCCESS RATIO');
-  console.log(`${((100 * tap.counts.pass) / tap.counts.total).toFixed(2)}%`);
+  console.log(
+    `${((100 * tap.counts.pass) / (tap.counts.total || 1)).toFixed(2)}%`
+  );
   logSeparator();
 };
 
