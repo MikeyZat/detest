@@ -2,7 +2,15 @@
 
 const normalizeStyles = (rawStyles) =>
   Object.keys(rawStyles).reduce((shapedStyles, property) => {
-    const value = rawStyles[property];
+    let value = rawStyles[property];
+
+    if (
+      property === 'line-height' &&
+      rawStyles['font-size'] &&
+      !isNaN(Number(value))
+    ) {
+      value = Number(value) * pxToNumber(rawStyles['font-size']);
+    }
 
     if (pixelsProperties.includes(property)) {
       shapedStyles[property] = valueToPixels(value);
@@ -46,6 +54,8 @@ const colorToRGB = (color) => {
 
 const extendHex = (val) =>
   `${val[0]}${[...val.substr(1)].map((char) => char.repeat(2)).join('')}`;
+
+const pxToNumber = (val) => Number(valueToPixels(val).replace('px', ''));
 
 module.exports = normalizeStyles;
 
@@ -91,6 +101,7 @@ const pixelsProperties = [
   'bottom',
   'right',
   'left',
+  'line-height',
 ];
 
 const colorProperties = [

@@ -19,7 +19,13 @@ const runPuppeteerTests = async (config, testCases) => {
     });
   }
 
-  await page.goto(url);
+  try {
+    await page.goto(url);
+  } catch (err) {
+    logger.trace(err);
+    logger.error(`Connection refused - couldn't access ${url}`);
+    throw err;
+  }
   logger.debug(`Running test: ${name} with ${testCases.length} test-cases`);
 
   await runTestCases(page, testCases);
@@ -35,7 +41,7 @@ const runTestCase = async (page, testCase) => {
   const { selector, xpath, ...expectedStyles } = testCase;
 
   await tap.test(
-    'Check if elements exists and have correct styles',
+    `[STYLES SERVICE]: Checking element: ${selector || xpath}`,
     async (t) => {
       let actualStyles;
       try {
