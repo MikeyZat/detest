@@ -15,9 +15,40 @@
 
 ## How to use
 
-...
+### Instalation
+
+In your project directory simply run: \
+`npm install --save-dev @mikeyzat12/detest`
+
+
+### Configuration file
+
+In your project root directory (where you have `package.json` file) create a `detest.yaml` file.
+
+### Writing test case suites
+
+To see the configuration file API and detailed guide how to write test cases, check out [how to use docs](./docs/how-to-use.md).
+
+### Running detest
+
+Firstly, add a `detest` script to your `package.json` file:
+
+```json
+{
+  "scripts": {
+    "detest": "detest"
+  }
+}
+```
+
+Then, you can evaluate your tests from the command line like: \
+`npm run detest`.
+
+It will run de-test tests with configuration from `detest.yaml` file by default. Nonetheless, you can easily choose another config file or use many other cli options ([more info here](./docs/how-to-use.md#cli-options)).
 
 ## Examples
+
+Check out the [Example React application project](https://github.com/MikeyZat/detest-example) for a complex example, including integrating the **de-test** into CI pipeline.
 
 ## How it works
 
