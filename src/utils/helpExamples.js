@@ -6,21 +6,21 @@ tests:
     type: styles
     debug: True
     test_cases:
-      - xpath: '#testxpath'
+      - selector: '#testselector"
         border: '1px solid #ffffff'
         width: 40
         height: 40
-        color: red
-      - xpath: '#anotherxpath'
-        background-color: $000000
+        color: rgb(0,0,0,0.87)
+      - xpath: "someXPath"
+        background-color: white
 
   - name: Second set of tests
     type: styles
     url: https://www.youtube.com/
     run: False
     test_cases:
-      - xpath: '#testxpath'
-        background-color: $000000
+      - selector: "#testxpath"
+        background-color: "#000000"
 `;
 
 module.exports = {
