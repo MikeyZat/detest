@@ -1,0 +1,10 @@
+detest.yaml
+Dockerfile.dev
+.prettierrc.js
+.eslintrc.js
+.env.template
+.dockerignore
+.github/**/**
+.idea/
+.vscode/
+.github/

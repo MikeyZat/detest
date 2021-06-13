@@ -1,11 +1,11 @@
 {
-  "name": "detest",
-  "version": "1.0.0",
+  "name": "de-test",
+  "version": "0.0.0",
   "description": "Tool for testing the design of your app.",
   "main": "index.js",
   "scripts": {
     "start": "node cli.js",
-    "dev": "echo \"TO DO\"",
+    "test": "echo \"No test sepcified\"",
     "lint-check": "eslint \"src/**/*.js\" \"index.js\" \"cli.js\"",
     "prettier-check": "prettier --check \"src/**/*.js\" \"index.js\" \"cli.js\"",
     "prettier-fix": "prettier --write \"src/**/*.js\" \"index.js\" \"cli.js\""
