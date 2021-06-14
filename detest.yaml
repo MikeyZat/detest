@@ -27,3 +27,10 @@ tests:
         color: '#ff0000'
       - selector: '#jakies_id'
         background-color: $000000
+
+  - name: Layout tests
+    type: layout
+    width: 375
+    test_cases:
+      - xd: cos
+        xd2: 123

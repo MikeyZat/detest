@@ -10,12 +10,11 @@ const logTestSummary = require('./src/utils/testSummary');
 const setExitCode = require('./src/utils/setExitCode');
 const { TESTS_EXAMPLE } = require('./src/utils/helpExamples');
 const stylesService = require('./src/services/stylesService');
+const layoutService = require('./src/services/layoutService');
 
 const testTypesServices = {
   [STYLES]: stylesService,
-  [LAYOUT]: async (localConfig, globalConfig) => {
-    logger.info(localConfig, globalConfig);
-  },
+  [LAYOUT]: layoutService,
 };
 
 const main = async (fileName, options) => {

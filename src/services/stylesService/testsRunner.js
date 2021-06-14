@@ -1,35 +1,12 @@
 // Created by Mikołaj Zatorski c. 2021
 
 const tap = require('tap');
-const BrowserSingleton = require('../../utils/browser');
 const { logger } = require('../../utils/logger');
+const { runPuppeteerTests } = require('../common/commonPuppeteer');
 const normalizeStyles = require('./normalizeStyles');
 
-const runPuppeteerTests = async (config, testCases) => {
-  const { url, width, height, timeout, name } = config;
-
-  const browser = await BrowserSingleton.getBrowser();
-  const page = await browser.newPage();
-  await page.setDefaultTimeout(timeout || 15000);
-
-  if (width || height) {
-    await page.setViewport({
-      width: width || 800,
-      height: height || 600,
-    });
-  }
-
-  try {
-    await page.goto(url);
-  } catch (err) {
-    logger.trace(err);
-    logger.error(`Connection refused - couldn't access ${url}`);
-    throw err;
-  }
-  logger.debug(`Running test: ${name} with ${testCases.length} test-cases`);
-
-  await runTestCases(page, testCases);
-};
+const runStylesTests = async (config, testCases) =>
+  await runPuppeteerTests(config, testCases, runTestCases);
 
 const runTestCases = async (page, testCases) => {
   for (testCase of testCases) {
@@ -96,5 +73,5 @@ const getElementStyles = (node, testedStyles) => {
 };
 
 module.exports = {
-  runPuppeteerTests,
+  runStylesTests,
 };
