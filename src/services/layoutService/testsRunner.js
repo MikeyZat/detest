@@ -12,6 +12,9 @@ const runTestCases = async (page, testCases) => {
 };
 
 const runTestCase = async (page, testCase) => {
+  logger.info(
+    "Welcome to layout test service - it's finally coming in in the next release"
+  );
   console.log(page);
   console.log(testCase);
 };
