@@ -7,6 +7,7 @@ const BrowserSingleton = require('./src/utils/browser');
 const mergeOptions = require('./src/utils/mergeOptions');
 const { STYLES, LAYOUT } = require('./src/utils/const');
 const logTestSummary = require('./src/utils/testSummary');
+const setExitCode = require('./src/utils/setExitCode');
 const { TESTS_EXAMPLE } = require('./src/utils/helpExamples');
 const stylesService = require('./src/services/stylesService');
 
@@ -34,6 +35,7 @@ const main = async (fileName, options) => {
       }
 
       logTestSummary();
+      setExitCode();
 
       await BrowserSingleton.closeBrowser();
     } else {

@@ -6,7 +6,6 @@ global:
 tests:
   - name: First set of tests
     type: styles
-    url: https://example.com/
     test_cases:
       - selector: '#klasa'
         border: '1px solid #ffffff'
@@ -18,7 +17,6 @@ tests:
 
   - name: Second set of tests
     type: styles
-    url: https://www.youtube.com/
     width: 1600
     timeout: 20000
     test_cases:
