@@ -53,6 +53,7 @@ It will run de-test tests with configuration from `detest.yaml` file by default.
 Check out the [Example React application project](https://github.com/MikeyZat/detest-example) for a complex example, including integrating the **de-test** into CI pipeline.
 
 ## How it works
+After parsing and extracting test case suites from the configuration file, `detest` uses [Pupeteer](https://github.com/puppeteer/puppeteer) to validate a web application in a headless browser. To evaluate each test case, it uses the [node-tap library](https://github.com/tapjs/node-tap), which is a super-light and efficient unit testing library. Combining these two tools together, we get extremely fast and precise design testing library, with clear interface and straightforward output.
 
 ## Motivation
 
