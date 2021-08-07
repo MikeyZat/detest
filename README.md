@@ -12,7 +12,9 @@
 
 [![Generic badge](https://img.shields.io/badge/Build%20with-Node-darkgreen.svg)](https://shields.io/)
 ![Build](https://github.com/MikeyZat/in-design-reviewer/actions/workflows/test.yaml/badge.svg)
-
+<a href="https://www.npmjs.com/package/@mikeyzat12/detest">
+  <img src="https://img.shields.io/npm/v/@mikeyzat12/detest.svg" />
+</a>
 ## How to use
 
 ### Instalation
