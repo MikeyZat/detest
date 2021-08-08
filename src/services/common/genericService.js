@@ -24,6 +24,9 @@ const genericService = async (localConfig, globalConfig, runTestsFunction) => {
     logger.debug(config);
 
     if (config.run !== false) {
+      if (localConfig.name)
+        logger.info(`Starting test case suite: ${localConfig.name}`);
+
       await runTestsFunction(config, testCases);
     }
 

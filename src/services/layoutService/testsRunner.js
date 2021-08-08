@@ -43,29 +43,56 @@ const runTestCase = async (page, testCase) => {
       }
 
       if (containCases) {
-        // query given selector and check if there are _count_ elements
         for (let elementToFind of containCases) {
-          const { selector, xpath, count = 1 } = elementToFind;
-          console.log(selector, xpath, count);
-          // t.same(actualCount, count);
+          const {
+            selector: childSelector,
+            xpath: childXpath,
+            count = 1,
+          } = elementToFind;
+          const childLocator = childSelector || childXpath;
+          try {
+            const multiple = true;
+            const foundChildElements = await getElement(
+              element,
+              childLocator,
+              !!childSelector,
+              multiple
+            );
+            const actualCount = foundChildElements?.length;
+            t.same(
+              actualCount,
+              count,
+              `check if element ${childLocator} appears ${count} times within element ${locator}`
+            );
+          } catch (err) {
+            logger.trace(err);
+            t.fail(`Element: ${childLocator} doesn't exist within ${locator}`);
+          }
         }
       }
-
-      logger.info(`test element: ${element}`);
       t.end();
     }
   );
 };
 
-const getElement = async (page, elementSelector, isSelector) =>
+const getElement = async (
+  parentElement,
+  elementSelector,
+  isSelector,
+  multiple = false
+) =>
   isSelector
-    ? await getElementWithSelector(page, elementSelector)
-    : await getElementWithxPath(page, elementSelector);
+    ? await getElementWithSelector(parentElement, elementSelector, multiple)
+    : await getElementWithxPath(parentElement, elementSelector, multiple);
 
-const getElementWithSelector = async (page, selector) => await page.$(selector);
+const getElementWithSelector = async (parentElement, selector, multiple) =>
+  multiple ? await parentElement.$$(selector) : await parentElement.$(selector);
 
-const getElementWithxPath = async (page, xPath) => {
-  const nodeHandle = await page.$x(xPath);
+const getElementWithxPath = async (parentElement, xPath, multiple) => {
+  const nodeHandle = await parentElement.$x(xPath);
+  if (multiple) {
+    return nodeHandle;
+  }
   return nodeHandle[0];
 };
 
