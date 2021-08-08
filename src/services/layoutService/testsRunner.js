@@ -8,17 +8,15 @@ const runLayoutTests = async (config, testCases) =>
   await runPuppeteerTests(config, testCases, runTestCases);
 
 const runTestCases = async (page, testCases) => {
-  for (testCase of testCases) {
+  for (let testCase of testCases) {
     await runTestCase(page, testCase);
   }
 };
 
 const runTestCase = async (page, testCase) => {
   const { selector, xpath, ...tests } = testCase;
-  const { position, contains } = tests;
+  const { position, contains: containCases } = tests;
   const locator = selector || xpath;
-  logger.info(position);
-  logger.info(contains);
 
   await tap.test(
     `[LAYOUT SERVICE]: Checking element: ${locator}`,
@@ -35,6 +33,22 @@ const runTestCase = async (page, testCase) => {
         t.fail(`Element: ${locator} doesn't exist`);
         t.end();
         return;
+      }
+
+      if (position) {
+        // check if element is available at this position
+        const { x, y } = position;
+        console.log(`x: ${x}y: 1${y}`);
+        // t.same() or t.ok()
+      }
+
+      if (containCases) {
+        // query given selector and check if there are _count_ elements
+        for (let elementToFind of containCases) {
+          const { selector, xpath, count = 1 } = elementToFind;
+          console.log(selector, xpath, count);
+          // t.same(actualCount, count);
+        }
       }
 
       logger.info(`test element: ${element}`);

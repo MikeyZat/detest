@@ -29,7 +29,7 @@ const main = async (fileName, options) => {
     }
 
     if (Array.isArray(tests)) {
-      for (test of tests) {
+      for (let test of tests) {
         await handleTest(test, mergedGlobalConfig);
       }
 

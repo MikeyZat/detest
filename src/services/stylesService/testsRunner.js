@@ -9,7 +9,7 @@ const runStylesTests = async (config, testCases) =>
   await runPuppeteerTests(config, testCases, runTestCases);
 
 const runTestCases = async (page, testCases) => {
-  for (testCase of testCases) {
+  for (let testCase of testCases) {
     await runTestCase(page, testCase);
   }
 };
@@ -65,9 +65,10 @@ const getStylesWithxPath = async (page, xPath, expectedStyles) => {
 };
 
 const getElementStyles = (node, testedStyles) => {
+  // eslint-disable-next-line
   const nodeStyles = window.getComputedStyle(node);
   const shapedStyles = {};
-  for (property in testedStyles) {
+  for (let property in testedStyles) {
     shapedStyles[property] = nodeStyles.getPropertyValue(property);
   }
   return shapedStyles;
