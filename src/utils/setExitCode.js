@@ -4,7 +4,7 @@
 const tap = require('tap');
 
 const setExitCode = () => {
-  process.on('exit', (code) => {
+  process.on('exit', () => {
     if (tap.counts.total === 0) {
       console.log('No test cases run :(');
       console.log('Exiting with status code 1');

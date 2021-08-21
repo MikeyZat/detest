@@ -24,6 +24,9 @@ const genericService = async (localConfig, globalConfig, runTestsFunction) => {
     logger.debug(config);
 
     if (config.run !== false) {
+      if (localConfig.name)
+        logger.info(`Starting test case suite: ${localConfig.name}`);
+
       await runTestsFunction(config, testCases);
     }
 
@@ -31,7 +34,7 @@ const genericService = async (localConfig, globalConfig, runTestsFunction) => {
   } catch (e) {
     logger.trace(e);
     logger.error(
-      `Error occured while running service for styles tests: ${
+      `Error occured while running test service for test case: ${
         localConfig.name || globalConfig.name
       }`
     );

@@ -9,22 +9,23 @@ const runStylesTests = async (config, testCases) =>
   await runPuppeteerTests(config, testCases, runTestCases);
 
 const runTestCases = async (page, testCases) => {
-  for (testCase of testCases) {
+  for (let testCase of testCases) {
     await runTestCase(page, testCase);
   }
 };
 
 const runTestCase = async (page, testCase) => {
   const { selector, xpath, ...expectedStyles } = testCase;
+  const locator = selector || xpath;
 
   await tap.test(
-    `[STYLES SERVICE]: Checking element: ${selector || xpath}`,
+    `[STYLES SERVICE]: Checking element: ${locator}`,
     async (t) => {
       let actualStyles;
       try {
         actualStyles = await getStylesToCompare(
           page,
-          selector || xpath,
+          locator,
           expectedStyles,
           !!selector
         );
@@ -32,12 +33,12 @@ const runTestCase = async (page, testCase) => {
         logger.trace(err);
         actualStyles = false;
       }
-      t.ok(actualStyles, `check if element ${selector || xpath} exists`);
+      t.ok(actualStyles, `check if element ${locator} exists`);
       if (actualStyles) {
         t.same(
           normalizeStyles(actualStyles),
           normalizeStyles(expectedStyles),
-          `compare if element ${selector || xpath} styles match`
+          `compare if element ${locator} styles match`
         );
       }
       t.end();
@@ -64,9 +65,10 @@ const getStylesWithxPath = async (page, xPath, expectedStyles) => {
 };
 
 const getElementStyles = (node, testedStyles) => {
+  // eslint-disable-next-line
   const nodeStyles = window.getComputedStyle(node);
   const shapedStyles = {};
-  for (property in testedStyles) {
+  for (let property in testedStyles) {
     shapedStyles[property] = nodeStyles.getPropertyValue(property);
   }
   return shapedStyles;
