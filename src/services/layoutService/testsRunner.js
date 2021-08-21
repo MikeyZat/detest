@@ -36,10 +36,28 @@ const runTestCase = async (page, testCase) => {
       }
 
       if (position) {
-        // check if element is available at this position
         const { x, y } = position;
-        console.log(`x: ${x}y: 1${y}`);
-        // t.same() or t.ok()
+        if (typeof x !== 'number' || x < 0 || typeof y !== 'number' || y < 0) {
+          t.fail('Either x or y value is not a valid number');
+        } else {
+          const {
+            x: actualX,
+            y: actualY,
+            width,
+            height,
+          } = await element.boundingBox();
+          const offsetX = x - actualX;
+          const offsetY = y - actualY;
+          const isInside =
+            offsetX >= 0 &&
+            offsetX <= width &&
+            offsetY >= 0 &&
+            offsetY <= height;
+          tap.ok(
+            isInside,
+            `check if element ${element} is visible at (x,y) = (${x}, ${y}).`
+          );
+        }
       }
 
       if (containCases) {
