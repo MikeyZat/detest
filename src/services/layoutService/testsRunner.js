@@ -55,7 +55,7 @@ const runTestCase = async (page, testCase) => {
             offsetY <= height;
           tap.ok(
             isInside,
-            `check if element ${element} is visible at (x,y) = (${x}, ${y}).`
+            `check if element ${locator} is visible at (x,y) = (${x}, ${y}).`
           );
         }
       }
