@@ -2,8 +2,10 @@
 
 const STYLES = 'STYLES';
 const LAYOUT = 'LAYOUT';
+const CONTRAST = 'CONTRAST';
 
 module.exports = {
   STYLES,
   LAYOUT,
+  CONTRAST,
 };
