@@ -57,7 +57,13 @@ const extendHex = (val) =>
 
 const pxToNumber = (val) => Number(valueToPixels(val).replace('px', ''));
 
-module.exports = normalizeStyles;
+module.exports = {
+  normalizeStyles,
+  pxToNumber,
+  valueToPixels,
+  extendHex,
+  colorToRGB,
+};
 
 const pixelsProperties = [
   'height',

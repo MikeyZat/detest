@@ -1,17 +1,43 @@
 // Created by Mikołaj Zatorski c. 2021
 
+const tap = require('tap');
 const { runPuppeteerTests } = require('../common/commonPuppeteer');
 const { CONTRAST } = require('../../utils/const');
+const shapeElementsForCalculations = require('./shapeElements');
+const { logger } = require('../../utils/logger');
 
 const runContrastTests = async (config) =>
   runPuppeteerTests(config, [CONTRAST], runContrastRatioAudit);
 
 const runContrastRatioAudit = async (page) => {
   const elementsToValidate = await getElementsToValidate(page);
-  console.log(elementsToValidate);
-  // shape for calculations
-  // calculate
-  // asert
+  logger.debug('Text elements to validate contrast ratio:');
+  logger.debug(elementsToValidate);
+  const shapedElements = shapeElementsForCalculations(elementsToValidate);
+  logger.debug('Shaped elements:');
+  logger.debug(shapedElements);
+  await tap.test(
+    `[CONTRAST SERVICE]: Running contrast ratio audit`,
+    async (t) => {
+      for (let element of shapedElements) {
+        const contrastRatio = contrast(element.colorRgb, element.backgroundRgb);
+        const { text } = element;
+        logger.debug(`Contrast ratio for element ${text}: ${contrastRatio}`);
+        if (element.isLargeText) {
+          t.ok(
+            contrastRatio > 3.0,
+            `Check if "${text}" (large) has contrast ratio > 3.0`
+          );
+        } else {
+          t.ok(
+            contrastRatio > 4.5,
+            `Check if "${text}" has contrast ratio > 4.5`
+          );
+        }
+      }
+      t.end();
+    }
+  );
 };
 
 const getElementsToValidate = async (page) => {
@@ -32,16 +58,38 @@ const getElementsToValidate = async (page) => {
         .map((element) => {
           // eslint-disable-next-line
           const elementStyles = window.getComputedStyle(element);
+          const shapedStyles = {};
+          for (let property of [
+            'color',
+            'background-color',
+            'font-size',
+            'font-weight',
+          ]) {
+            shapedStyles[property] = elementStyles.getPropertyValue(property);
+          }
           return {
             text: element.innerText,
-            color: elementStyles.getPropertyValue('color'),
-            background: elementStyles.getPropertyValue('background-color'),
-            fontSize: elementStyles.getPropertyValue('font-size'),
-            fontWeight: elementStyles.getPropertyValue('font-weight'),
+            ...shapedStyles,
           };
         }),
     pageTexts
   );
+};
+
+const luminance = (rgb) => {
+  const a = rgb.map((v) => {
+    v /= 255;
+    return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4);
+  });
+  return a[0] * 0.2126 + a[1] * 0.7152 + a[2] * 0.0722;
+};
+
+const contrast = (rgb1, rgb2) => {
+  const lum1 = luminance(rgb1);
+  const lum2 = luminance(rgb2);
+  const brightest = Math.max(lum1, lum2);
+  const darkest = Math.min(lum1, lum2);
+  return (brightest + 0.05) / (darkest + 0.05);
 };
 
 module.exports = {
