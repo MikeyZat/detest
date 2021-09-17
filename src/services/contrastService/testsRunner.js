@@ -3,7 +3,10 @@
 const tap = require('tap');
 const { runPuppeteerTests } = require('../common/commonPuppeteer');
 const { CONTRAST } = require('../../utils/const');
-const shapeElementsForCalculations = require('./shapeElements');
+const {
+  shapeElementsForCalculations,
+  removeTransparency,
+} = require('./shapeElements');
 const { logger } = require('../../utils/logger');
 
 const runContrastTests = async (config) =>
@@ -13,9 +16,11 @@ const runContrastRatioAudit = async (page) => {
   const elementsToValidate = await getElementsToValidate(page);
   logger.debug('Text elements to validate contrast ratio:');
   logger.debug(elementsToValidate);
-  const shapedElements = shapeElementsForCalculations(elementsToValidate);
-  logger.debug('Shaped elements:');
-  logger.debug(shapedElements);
+  const withCorrectBackgrounds = await removeTransparency(
+    elementsToValidate,
+    page
+  );
+  const shapedElements = shapeElementsForCalculations(withCorrectBackgrounds);
   await tap.test(
     `[CONTRAST SERVICE]: Running contrast ratio audit`,
     async (t) => {
@@ -23,17 +28,13 @@ const runContrastRatioAudit = async (page) => {
         const contrastRatio = contrast(element.colorRgb, element.backgroundRgb);
         const { text } = element;
         logger.debug(`Contrast ratio for element ${text}: ${contrastRatio}`);
-        if (element.isLargeText) {
-          t.ok(
-            contrastRatio > 3.0,
-            `Check if "${text}" (large) has contrast ratio > 3.0`
-          );
-        } else {
-          t.ok(
-            contrastRatio > 4.5,
-            `Check if "${text}" has contrast ratio > 4.5`
-          );
-        }
+        const threshold = element.isLargeText ? 3.0 : 4.5;
+        t.ok(
+          contrastRatio > threshold,
+          `Check if "${text}" ${
+            element.isLargeText ? '(large text)' : ''
+          } has contrast ratio > ${threshold}`
+        );
       }
       t.end();
     }

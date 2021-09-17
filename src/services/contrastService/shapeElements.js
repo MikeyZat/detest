@@ -1,4 +1,5 @@
 const { pxToNumber } = require('../stylesService/normalizeStyles');
+const { TRANSPARENT } = require('../../utils/const');
 
 const shapeElementsForCalculations = (elements) => {
   const shapedElements = elements.map((element) => {
@@ -12,7 +13,7 @@ const shapeElementsForCalculations = (elements) => {
     const colorRgba = textToRgbaArray(color);
 
     const backgroundRgb = textToRgbaArray(
-      bgColor === 'rgba(0, 0, 0, 0)' ? 'rgb(255,255,255)' : bgColor
+      bgColor === TRANSPARENT ? 'rgb(255,255,255)' : bgColor
     );
 
     const colorRgb =
@@ -29,7 +30,54 @@ const shapeElementsForCalculations = (elements) => {
   return shapedElements;
 };
 
-module.exports = shapeElementsForCalculations;
+const removeTransparency = async (elements, page) => {
+  const transparentElementsText = elements
+    .filter((node) => node['background-color'] === TRANSPARENT)
+    .map((node) => node.text);
+
+  const nonTransparentBackgrounds = await page.evaluate(
+    (transparentElementsText, TRANSPARENT) =>
+      // eslint-disable-next-line
+      Array.from(document.body.querySelectorAll('*'))
+        .filter((element) =>
+          transparentElementsText.some((text) =>
+            element.innerText.includes(text)
+          )
+        )
+        .map((element) => {
+          // eslint-disable-next-line
+          const elementStyles = window.getComputedStyle(element);
+          return {
+            text: element.innerText,
+            background: elementStyles.getPropertyValue('background-color'),
+          };
+        })
+        .filter((node) => node.background !== TRANSPARENT)
+        .reverse(),
+    transparentElementsText,
+    TRANSPARENT
+  );
+  return elements.map((node) => {
+    if (node['background-color'] !== TRANSPARENT) return node;
+    return {
+      ...node,
+      'background-color': findBackground(node, nonTransparentBackgrounds),
+    };
+  });
+};
+
+const findBackground = (element, nonTransparentBackgrounds) => {
+  const { text } = element;
+  return (
+    nonTransparentBackgrounds.find((bgNode) => bgNode.text.includes(text))
+      ?.background || 'rgb(255,255,255)'
+  );
+};
+
+module.exports = {
+  shapeElementsForCalculations,
+  removeTransparency,
+};
 
 const textToRgbaArray = (text) =>
   text
