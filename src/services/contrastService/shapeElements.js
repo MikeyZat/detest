@@ -41,7 +41,7 @@ const removeTransparency = async (elements, page) => {
       Array.from(document.body.querySelectorAll('*'))
         .filter((element) =>
           transparentElementsText.some((text) =>
-            element.innerText.includes(text)
+            element.innerText?.includes(text)
           )
         )
         .map((element) => {
