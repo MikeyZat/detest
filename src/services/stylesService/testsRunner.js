@@ -3,7 +3,7 @@
 const tap = require('tap');
 const { logger } = require('../../utils/logger');
 const { runPuppeteerTests } = require('../common/commonPuppeteer');
-const normalizeStyles = require('./normalizeStyles');
+const { normalizeStyles } = require('./normalizeStyles');
 
 const runStylesTests = async (config, testCases) =>
   await runPuppeteerTests(config, testCases, runTestCases);

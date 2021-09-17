@@ -5,16 +5,18 @@ const fs = require('fs');
 const { logger, setLoggerInDebug } = require('./src/utils/logger');
 const BrowserSingleton = require('./src/utils/browser');
 const mergeOptions = require('./src/utils/mergeOptions');
-const { STYLES, LAYOUT } = require('./src/utils/const');
+const { STYLES, LAYOUT, CONTRAST } = require('./src/utils/const');
 const logTestSummary = require('./src/utils/testSummary');
 const setExitCode = require('./src/utils/setExitCode');
 const { TESTS_EXAMPLE } = require('./src/utils/helpExamples');
 const stylesService = require('./src/services/stylesService');
 const layoutService = require('./src/services/layoutService');
+const contrastService = require('./src/services/contrastService');
 
 const testTypesServices = {
   [STYLES]: stylesService,
   [LAYOUT]: layoutService,
+  [CONTRAST]: contrastService,
 };
 
 const main = async (fileName, options) => {
