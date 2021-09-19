@@ -46,7 +46,7 @@ Firstly, add a `detest` script to your `package.json` file:
 Then, you can evaluate your tests from the command line like: \
 `npm run detest`.
 
-It will run de-test tests with configuration from `detest.yaml` file by default. Nonetheless, you can easily choose another config file or use many other cli options ([more info here](./docs/how-to-use.md#cli-options)).
+It will run de-test tests with configuration from `detest.yaml` file by default. Nonetheless, you can easily choose another config file or use many other cli options ([more info here](./docs/how-to-use.md#cli)).
 
 ## Examples
 
