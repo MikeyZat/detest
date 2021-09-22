@@ -147,7 +147,7 @@ For each test scenario you specify its `type`. Each of them is followed by `test
 - type: styles
   test_cases:
    - selector: ".App"
-	 color: "#fafafa"
+     color: "#fafafa"
 ```
 
 ### Styles
