@@ -4,18 +4,27 @@ const tap = require('tap');
 const { logger } = require('../../utils/logger');
 const { runPuppeteerTests } = require('../common/commonPuppeteer');
 const { normalizeStyles } = require('./normalizeStyles');
+const {
+  runTestCases: genericRunTestCases,
+  runNestedTestCases: genericRunNestedTestCases,
+} = require('../common/genericTestsRunners');
 
 const runStylesTests = async (config, testCases) =>
   await runPuppeteerTests(config, testCases, runTestCases);
 
-const runTestCases = async (page, testCases) => {
-  for (let testCase of testCases) {
-    await runTestCase(page, testCase);
-  }
-};
+const runTestCases = async (...args) =>
+  genericRunTestCases(runTestCase, ...args);
+
+const runNestedTestCases = async (...args) =>
+  genericRunNestedTestCases(runTestCase, ...args);
 
 const runTestCase = async (page, testCase) => {
-  const { selector, xpath, ...expectedStyles } = testCase;
+  const {
+    selector,
+    xpath,
+    inside: nestedTestCases,
+    ...expectedStyles
+  } = testCase;
   const locator = selector || xpath;
 
   await tap.test(
@@ -44,6 +53,7 @@ const runTestCase = async (page, testCase) => {
       t.end();
     }
   );
+  await runNestedTestCases(page, nestedTestCases, selector, xpath);
 };
 
 const getStylesToCompare = async (

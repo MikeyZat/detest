@@ -3,18 +3,22 @@
 const tap = require('tap');
 const { runPuppeteerTests } = require('../common/commonPuppeteer');
 const { logger } = require('../../utils/logger');
+const {
+  runTestCases: genericRunTestCases,
+  runNestedTestCases: genericRunNestedTestCases,
+} = require('../common/genericTestsRunners');
 
 const runLayoutTests = async (config, testCases) =>
   await runPuppeteerTests(config, testCases, runTestCases);
 
-const runTestCases = async (page, testCases) => {
-  for (let testCase of testCases) {
-    await runTestCase(page, testCase);
-  }
-};
+const runTestCases = async (...args) =>
+  genericRunTestCases(runTestCase, ...args);
+
+const runNestedTestCases = async (...args) =>
+  genericRunNestedTestCases(runTestCase, ...args);
 
 const runTestCase = async (page, testCase) => {
-  const { selector, xpath, ...tests } = testCase;
+  const { selector, xpath, inside: nestedTestCases, ...tests } = testCase;
   const { position, contains: containCases } = tests;
   const locator = selector || xpath;
 
@@ -91,6 +95,8 @@ const runTestCase = async (page, testCase) => {
       t.end();
     }
   );
+
+  await runNestedTestCases(page, nestedTestCases, selector, xpath);
 };
 
 const getElement = async (
