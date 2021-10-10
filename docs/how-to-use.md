@@ -30,6 +30,8 @@ Here you can learn how to get 100% of the **detest** library power. Check out th
   * [Enhanced test types](#enhanced-test-types)
     + [Contrast](#contrast)
   * [Output](#output)
+  * [Utilities](#utilities)
+    + [Nested test cases](#nested-test-cases)
 
 ## API format
 
@@ -284,3 +286,60 @@ In case of test failure you will see the difference between expectations and act
       }
 ```
 In this case, we expected `display: inline` but `display: block` was found instead.
+
+## Utilities
+
+A couple of utilities that might help you in everyday test writing.
+
+### Nested test cases
+Applies for test types: `styles, layout`
+
+New attributes: `inside`, `isDirectChild`
+
+Suppose that you have following html structure:
+```html
+<div id="free">
+	<div class="MuiCardHeader-root">...</div>
+	<div class="MuiCardHeader-content">
+		<h2>$0</h2>
+	<div>
+	<div>
+		<button>Sign up for free</button>
+	</div>
+</div>
+```
+then instead of repeating the `#free` selector everytime like this:
+```yaml
+- selector: "#free"
+  height: 332
+- selector: "#free > .MuiCardHeader-root"
+  padding: 16
+  background-color: "#eee"
+- selector: "#free h2"
+  font-size: 48
+  font-family: "Roboto, Helvetica, Arial, sans-serif"
+- selector: "#free button"
+  color: "#3f51b5"
+```
+
+you can use the `inside` attribute to test all descendant of `#free` element like this:
+```yaml
+- selector: "#free"
+  height: 332
+  inside:
+    - selector: ".MuiCardHeader-root"
+      isDirectChild: True
+      padding: 16
+      background-color: "#eee"
+    - selector: "h2"
+      font-size: 48
+      font-family: "Roboto, Helvetica, Arial, sans-serif"
+    - selector: "button"
+      color: "#3f51b5"
+``` 
+
+The `isDirectChild` (defaults to `False`) specifies that an element is direct child of its parent. In case of selector it's equivalent to : `$parentSelector > $childSelector`.
+
+You can also nest `xpath` in the same way as `selector`!
+
+Nesting level is **not** limited to one, you can nest your tests **how many times you want!**
