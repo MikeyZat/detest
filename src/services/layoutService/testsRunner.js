@@ -11,10 +11,9 @@ const {
 const runLayoutTests = async (config, testCases) =>
   await runPuppeteerTests(config, testCases, runTestCases);
 
-const runTestCases = async (...args) =>
-  genericRunTestCases(runTestCase, ...args);
+const runTestCases = (...args) => genericRunTestCases(runTestCase, ...args);
 
-const runNestedTestCases = async (...args) =>
+const runNestedTestCases = (...args) =>
   genericRunNestedTestCases(runTestCase, ...args);
 
 const runTestCase = async (page, testCase) => {
