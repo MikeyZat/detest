@@ -11,13 +11,16 @@ const frameworksMap = {
 const mapSelectors = (testCases, UI_framework) => {
   if (typeof UI_framework !== 'string') return testCases;
   const selectorsMap = frameworksMap[UI_framework.toLowerCase()];
-  return testCases.map((testCase) => mapSelector(testCase, selectorsMap));
+  const selectorsList = getSelectorsList(selectorsMap);
+  return testCases.map((testCase) =>
+    mapSelector(testCase, { selectorsMap, selectorsList })
+  );
 };
 
-const mapSelector = (obj, selectorsMap) => {
+const mapSelector = (obj, mappers) => {
   Object.keys(obj).forEach((key) => {
     if (typeof obj[key] === 'object') {
-      obj[key] = mapSelector(obj[key], selectorsMap);
+      obj[key] = mapSelector(obj[key], mappers);
     }
   });
 
@@ -26,8 +29,21 @@ const mapSelector = (obj, selectorsMap) => {
   if (typeof selector !== 'string') return obj;
   return {
     ...obj,
-    selector: selectorsMap[selector] || selector,
+    selector: getMappedSelector(selector, mappers),
   };
 };
+
+const getSelectorsList = (selectorsMap) => {
+  const selectorsList = Object.keys(selectorsMap);
+  selectorsList.sort((a, b) => b.length - a.length);
+  return selectorsList;
+};
+
+const getMappedSelector = (selector, { selectorsMap, selectorsList }) =>
+  selectorsList.reduce(
+    (prevSelector, currKey) =>
+      prevSelector.replaceAll(currKey, selectorsMap[currKey]),
+    selector
+  );
 
 module.exports = mapSelectors;
