@@ -1,6 +1,6 @@
 {
   "name": "@mikeyzat12/detest",
-  "version": "0.0.4",
+  "version": "0.1.0",
   "description": "Tool for testing the design of your app.",
   "main": "index.js",
   "scripts": {
