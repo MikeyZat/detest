@@ -7,9 +7,14 @@ const {
   runTestCases: genericRunTestCases,
   runNestedTestCases: genericRunNestedTestCases,
 } = require('../common/genericTestsRunners');
+const mapSelectors = require('../../utils/mapSelectors');
 
 const runLayoutTests = async (config, testCases) =>
-  await runPuppeteerTests(config, testCases, runTestCases);
+  await runPuppeteerTests(
+    config,
+    mapSelectors(testCases, config.UI_framework),
+    runTestCases
+  );
 
 const runTestCases = (...args) => genericRunTestCases(runTestCase, ...args);
 

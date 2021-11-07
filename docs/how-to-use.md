@@ -1,3 +1,4 @@
+
 # Welcome to de-test docs
 
 Here you can learn how to get 100% of the **detest** library power. Check out the API including all the test types. For a live example visit [detest example](https://github.com/MikeyZat/detest-example).
@@ -32,6 +33,7 @@ Here you can learn how to get 100% of the **detest** library power. Check out th
   * [Output](#output)
   * [Utilities](#utilities)
     + [Nested test cases](#nested-test-cases)
+    + [Using common components frameworks](#using-common-components-frameworks)
 
 ## API format
 
@@ -343,3 +345,44 @@ The `isDirectChild` (defaults to `False`) specifies that an element is direct ch
 You can also nest `xpath` in the same way as `selector`!
 
 Nesting level is **not** limited to one, you can nest your tests **how many times you want!**
+
+### Using common components frameworks
+Detest has additional support for following UI components frameworks/libraries:
+- [Material UI](https://mui.com/)
+- [Bootstrap v.5](https://getbootstrap.com/)
+
+If you are using one of them, you can specify it in the global config:
+```yaml
+global:
+  # ...
+  UI_framework: material
+  # or
+  # UI_framework: bootstrap
+```
+
+Now instead of specifying a detailed selector/xpath for every element you would like to test, you can use the **component name** (camel cased) and it will be automatically mapped to a proper selector.
+
+Example:
+ ```yaml
+- name: Pricing tab on desktop
+  type: styles
+  test_cases:
+    - selector: "bar"
+      width: 1600
+      height: 64
+      background-color: "#3f51b5"
+    - selector: "#pro"
+      height: 356
+      inside:
+        - selector: "cardHeader"
+          padding: 16
+          background-color: "#eee"
+      
+- name: Welcome page layout desktop
+  type: layout
+  test_cases:
+  - selector: main
+    contains:
+      - selector: "outlinedInput"
+        count: 2
+```
