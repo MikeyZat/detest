@@ -39,11 +39,19 @@ const getSelectorsList = (selectorsMap) => {
   return selectorsList;
 };
 
-const getMappedSelector = (selector, { selectorsMap, selectorsList }) =>
-  selectorsList.reduce(
-    (prevSelector, currKey) =>
-      prevSelector.replaceAll(currKey, selectorsMap[currKey]),
+const getMappedSelector = (selector, { selectorsMap, selectorsList }) => {
+  const hashPrefix = '>-toMap-<';
+  const getHash = (idx) => `${idx}${hashPrefix}${idx}`;
+  const mappedWithHash = selectorsList.reduce(
+    (prevSelector, currKey, idx) =>
+      prevSelector.replaceAll(currKey, getHash(idx)),
     selector
   );
+  return selectorsList.reduce(
+    (prevSelector, currKey, idx) =>
+      prevSelector.replaceAll(getHash(idx), selectorsMap[currKey]),
+    mappedWithHash
+  );
+};
 
 module.exports = mapSelectors;

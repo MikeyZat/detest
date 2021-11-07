@@ -1,4 +1,4 @@
-module.exports = {
+const componentsMap = {
   autocomplete: '.MuiAutocomplete-root',
   textButton: '.MuiButton-text',
   containedButton: '.MuiButton-contained',
@@ -66,3 +66,5 @@ module.exports = {
   gridItem: '.MuiGrid-item',
   imageList: '.MuiImageList-root',
 };
+
+module.exports = componentsMap;
