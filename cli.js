@@ -44,7 +44,7 @@ const handler = ({ configFile, ...rest }) =>
   main(configFile, extractOptions(rest));
 
 yargs
-  .command('*', 'Elo', builder, handler)
+  .command('*', 'Run detest', builder, handler)
   .usage('Usage: $0 [configFile] [options...]')
   .example('$0 -c localTests.conf', 'Run local tests')
   .help()
