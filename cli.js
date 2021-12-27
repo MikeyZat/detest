@@ -33,11 +33,16 @@ const builder = (command) =>
         type: 'number',
         alias: 't',
       },
+      UI_framework: {
+        describe: 'UI framework used to build the web application',
+        type: 'string',
+        alias: 'f',
+      },
     });
 
 const extractOptions = (options) => {
-  const { url, debug, name, timeout } = options;
-  return { url, debug, name, timeout };
+  const { url, debug, name, timeout, UI_framework } = options;
+  return { url, debug, name, timeout, UI_framework };
 };
 
 const handler = ({ configFile, ...rest }) =>
