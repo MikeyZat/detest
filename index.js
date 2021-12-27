@@ -41,7 +41,7 @@ const main = async (fileName, options) => {
       await BrowserSingleton.closeBrowser();
     } else {
       logger.error(
-        `tests must be an array. Check out the documentation or see the example below:${TESTS_EXAMPLE}`
+        `Tests must be an array. Check out the documentation or see the example below:${TESTS_EXAMPLE}`
       );
     }
   } catch (e) {

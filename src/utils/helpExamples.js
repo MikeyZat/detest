@@ -7,7 +7,6 @@ tests:
     debug: True
     test_cases:
       - selector: '#testselector"
-        border: '1px solid #ffffff'
         width: 40
         height: 40
         color: rgb(0,0,0,0.87)

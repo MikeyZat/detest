@@ -34,7 +34,7 @@ const runNestedTestCases = async (
       }
     } else {
       throw new Error(
-        'Invalid nested selector - parent and child should have both selector or xpath specified.'
+        'Invalid nested selector - parent and child should both have either selector or xpath specified.'
       );
     }
 

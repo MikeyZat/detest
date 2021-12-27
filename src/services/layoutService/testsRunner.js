@@ -46,7 +46,7 @@ const runTestCase = async (page, testCase) => {
       if (position) {
         const { x, y } = position;
         if (typeof x !== 'number' || x < 0 || typeof y !== 'number' || y < 0) {
-          t.fail('Either x or y value is not a valid number');
+          t.fail('Either x or y value is not a positive number');
         } else {
           const {
             x: actualX,

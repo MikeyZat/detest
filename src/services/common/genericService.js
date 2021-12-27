@@ -34,7 +34,7 @@ const genericService = async (localConfig, globalConfig, runTestsFunction) => {
   } catch (e) {
     logger.trace(e);
     logger.error(
-      `Error occured while running test service for test case: ${
+      `Error ocurred while running test service for test case: ${
         localConfig.name || globalConfig.name
       }`
     );

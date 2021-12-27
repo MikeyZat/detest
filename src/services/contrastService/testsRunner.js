@@ -31,7 +31,7 @@ const runContrastRatioAudit = async (page) => {
         const threshold = element.isLargeText ? 3.0 : 4.5;
         t.ok(
           contrastRatio > threshold,
-          `Check if "${text}" ${
+          `check if "${text}" ${
             element.isLargeText ? '(large text)' : ''
           } has contrast ratio > ${threshold}`
         );
